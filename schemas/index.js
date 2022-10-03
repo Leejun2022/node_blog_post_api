@@ -1,9 +1,13 @@
+const hidden = require('../config/dev')
 const mongoose = require("mongoose");
 
 const connect = () => {
-  mongoose
-    .connect("mongodb://localhost:27017/Blog_Lists")
-    .catch(err => console.log(err));
+  if (process.env.NOde_ENV !== 'production') {
+    mongoose.set('debug', true)
+  }
+
+  mongoose.connect(hidden.mongoURI, { dbName:'Blog_Lists'
+    }).then (() => console.log("MongoDB connected...")).catch(err => console.log(err));
 };
 
 mongoose.connection.on("error", err => {
