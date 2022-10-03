@@ -33,26 +33,22 @@ router.post("/comments/:_postId", async (req, res) => {
 
   const { _postId } = req.params;
   const [postId] = await Posts.find({ _id: _postId });
-  try {
-    if (_postId == postId._id) {
-      const createdComments = await Comments.create({
-        _postId,
-        user,
-        password,
-        content,
-        time,
-      });
-      res.status(200).json({ comments: createdComments, Message: "댓글 등록완료!" });
-    } else {
-      return res
-        .status(400)
-        .send({ success: false, errorMessage: "콘텐츠 아이디없습니다." });
-    }
-  } catch (error) {
-    res.status(400).send(error);
+  if (_postId == postId._id) {
+    const createdComments = await Comments.create({
+      _postId,
+      user,
+      password,
+      content,
+      time,
+    });
+    res
+      .status(200)
+      .json({ comments: createdComments, Message: "댓글 등록완료!" });
+  } else {
+    return res
+      .status(400)
+      .json({ success: false, errorMessage: "콘텐츠 아이디없습니다." });
   }
-
-  
 });
 
 // 코멘트 수정
@@ -74,12 +70,10 @@ router.put("/comments/:_commentId", async (req, res) => {
       return res
         .status(400)
         .json({ success: false, errorMessage: "비밀번호가 틀렸습니다요~!" });
-    } 
+    }
   } catch (error) {
     res.status(400).send(error);
   }
-
-  
 });
 
 // 코멘트 삭제
@@ -101,7 +95,6 @@ router.delete("/comments/:_commentId", async (req, res) => {
   } catch (error) {
     res.status(400).send(error);
   }
- 
 });
 
 module.exports = router;
