@@ -4,7 +4,7 @@ const Posts = require("../schemas/post");
 const dayjs = require("dayjs");
 
 router.get("/posts", async (req, res) => {
-  const posts = await Posts.find().sort({createdAt: -1});
+  const posts = await Posts.find().sort({time: -1});
   const data = posts.map((select) => {
     return {
       postid: select._id,
@@ -20,7 +20,7 @@ router.get("/posts", async (req, res) => {
 
 router.get("/posts/:_postId", async (req, res) => {
   const { _postId } = req.params;
-  const posts = await Posts.find({ _id: _postId }).sort({createdAt: -1});
+  const posts = await Posts.find({ _id: _postId }).sort({time: -1});
   const data = posts.map((select) => {
     return {
       postid: select._id,
@@ -38,9 +38,10 @@ router.get("/posts/:_postId", async (req, res) => {
 router.post("/posts", async (req, res) => {
   const { user, password, title, content } = req.body;
 
-  var now = dayjs();
-  var time = now.format();
+  let now = dayjs();
+  let time = now.format();
   time = time.slice(0, 16).split("T").join(" ");
+
   try {
     const createdPosts = await Posts.create({
       user,
