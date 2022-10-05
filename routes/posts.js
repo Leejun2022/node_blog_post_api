@@ -4,7 +4,7 @@ const Posts = require("../schemas/post");
 const dayjs = require("dayjs");
 
 router.get("/posts", async (req, res) => {
-  const posts = await Posts.find();
+  const posts = await Posts.find().sort({createdAt: -1});
   const data = posts.map((select) => {
     return {
       postid: select._id,
@@ -20,7 +20,7 @@ router.get("/posts", async (req, res) => {
 
 router.get("/posts/:_postId", async (req, res) => {
   const { _postId } = req.params;
-  const posts = await Posts.find({ _id: _postId });
+  const posts = await Posts.find({ _id: _postId }).sort({createdAt: -1});
   const data = posts.map((select) => {
     return {
       postid: select._id,

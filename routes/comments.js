@@ -12,7 +12,7 @@ const dayjs = require("dayjs");
 // 코멘트 띄우기
 router.get("/comments/:_postId", async (req, res) => {
   const { _postId } = req.params;
-  const comments = await Comments.find({ _postId: _postId });
+  const comments = await Comments.find({ _postId: _postId }).sort({createdAt: -1});
   const commentdata = comments.map((select) => {
     return {
       commentid: select._id,
