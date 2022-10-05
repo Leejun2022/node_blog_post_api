@@ -50,7 +50,7 @@ router.post("/posts", async (req, res) => {
       content,
       time,
     });
-    res.status(201).json({ posts: createdPosts, message: "게시물 등록완료!" });
+    res.status(201).json({ posts: createdPosts, message: "게시물 등록을 완료했습니다!" });
   } catch (error) {
     res.status(400).send(error);
   }

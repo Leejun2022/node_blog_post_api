@@ -19,9 +19,11 @@ app.post("/", (req,res) => {
     res.send("기본 URI에 POST 메소드가 정상적으로 실행되었습니다.")
 })
 
-app.use("/", postsRouter);
+// app.use("/", postsRouter);
 
-app.use("/", commentsRouter);
+// app.use("/", commentsRouter);
+
+app.use([postsRouter, commentsRouter])
 
 
 app.listen(port, () => {
